@@ -1,187 +1,293 @@
-/* --- General Setup --- */
+/* --- CSS Variables and Base Styles --- */
 :root {
-    --bg-color: #FFFDF7; /* Kem */
+    --bg-color: #FFFDF7;
     --text-color: #333;
-    --primary-color: #B11226; /* Đỏ rượu */
-    --accent-color: #F8C8DC; /* Hồng pastel */
+    --primary-color: #B11226; /* Wine Red */
+    --accent-color: #F8B4C4;  /* Pastel Pink */
     --font-heading: 'Great Vibes', cursive;
     --font-body: 'Inter', sans-serif;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevent scroll during transitions */
 }
 
 body {
     font-family: var(--font-body);
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 1rem;
 }
 
-/* --- Screen Management --- */
+/* --- Main Layout & Screen Transitions --- */
+main {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 95vh;
+    max-height: 750px;
+}
+
 .screen {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+    inset: 0;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.9);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    opacity: 0;
+    transform: translateX(100px) scale(0.95);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+    pointer-events: none;
 }
 
 .screen.active {
     opacity: 1;
-    visibility: visible;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+.screen:not(.active) {
+    transform: translateX(-100px) scale(0.95);
 }
 
 .content-wrapper {
-    text-align: center;
-    max-width: 600px;
-    width: 100%;
-    z-index: 10;
+    max-width: 100%;
+    z-index: 20; /* Keep content above canvas */
+    position: relative;
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 10px; /* For scrollbar */
+}
+/* Custom scrollbar for webkit browsers */
+.content-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+.content-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+  border-radius: 10px;
 }
 
-/* --- Welcome Screen --- */
-#welcome-screen h1 {
+/* --- Typography --- */
+.title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 10vw, 5rem);
+    font-size: clamp(3rem, 10vw, 4.5rem);
     color: var(--primary-color);
-    margin-bottom: 0;
     font-weight: normal;
+    margin-bottom: 0.5rem;
 }
 
-#welcome-screen h2 {
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
-    margin-bottom: 20px;
-    font-weight: 700;
+.subtitle {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    opacity: 0.9;
 }
 
-#welcome-screen p {
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    margin-bottom: 30px;
+.description {
+    margin: 1.5rem 0;
+    font-size: 1rem;
     line-height: 1.6;
 }
 
-.name-form {
+.wish-letter {
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: left;
+    min-height: 200px;
+    transition: opacity 300ms ease-in-out;
+    white-space: pre-wrap;
+    background: rgba(255,255,255,0.4);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+/* --- Form Elements & Buttons --- */
+#name-form {
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    align-items: center;
+    gap: 1rem;
 }
 
 #name-input {
     width: 100%;
-    max-width: 350px;
-    padding: 15px 20px;
+    padding: 1rem;
     border: 1px solid #ddd;
-    border-radius: 50px;
+    border-radius: 12px;
     font-size: 1rem;
-    text-align: center;
-    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #name-input:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 10px rgba(248, 200, 220, 0.7);
+    box-shadow: 0 0 0 3px rgba(248, 180, 196, 0.5);
 }
 
 #name-input.error {
-    animation: shake 0.5s;
+    animation: shake 0.5s ease-in-out;
     border-color: var(--primary-color);
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-button {
-    padding: 12px 30px;
+.btn {
+    padding: 1rem 1.5rem;
     border: none;
-    border-radius: 50px;
-    background: var(--primary-color);
-    color: white;
+    border-radius: 12px;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: var(--primary-color);
+    color: white;
+    transition: transform 0.2s, background-color 0.2s;
+    font-family: var(--font-body);
 }
 
-button:hover {
+.btn:hover, .btn:focus {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(177, 18, 38, 0.3);
+    background-color: #9a0f20;
+    outline: none;
 }
 
-/* --- Wishes Screen --- */
-#fireworks-canvas {
-    position: absolute;
+.button-group {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--accent-color);
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: rgba(248, 180, 196, 0.2);
+    border-color: var(--primary-color);
+}
+
+/* --- Decorations --- */
+.rose-decor {
+    position: fixed;
+    z-index: -1;
+    color: var(--accent-color);
+    opacity: 0.2;
+    animation: float 8s ease-in-out infinite;
+}
+.rose-svg {
+    width: clamp(100px, 20vw, 200px);
+    height: auto;
+}
+.top-left { top: 2%; left: 2%; transform: rotate(-25deg); animation-delay: -2s; }
+.bottom-right { bottom: 2%; right: 2%; transform: rotate(165deg); }
+
+/* --- Falling Flowers --- */
+#flower-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
 }
 
-#wish-box {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+.flower-petal {
+    position: absolute;
+    top: -50px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-color);
+    border-radius: 1px 50% 50% 50%;
+    opacity: 0.7;
+    animation: fall linear infinite;
+}
+.flower-petal:nth-child(2n) {
+    background-color: #fff;
+    border: 1px solid var(--accent-color);
+}
+.flower-petal:nth-child(3n) {
+    transform: rotate(120deg);
 }
 
-#wish-text {
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    line-height: 1.7;
-    min-height: 150px; /* Ensure space for typing */
-    text-align: left;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-.controls button {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: var(--primary-color);
-    font-weight: normal;
-    font-size: 0.9rem;
-}
-
-.controls button.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* --- Footer --- */
-footer {
-    position: fixed;
-    bottom: 10px;
-    left: 0;
+/* --- Fireworks & Controls --- */
+#fireworks-canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #aaa;
-    z-index: 100;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
 }
+.controls-corner {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    z-index: 30;
+    display: flex;
+    gap: 0.5rem;
+}
+
+#fireworks-toggle, #music-toggle {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #eee;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#fireworks-toggle {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+}
+#fireworks-toggle.active, #music-toggle.active {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+}
+
+/* --- Animations --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--initial-rotate, 0deg)); }
+    50% { transform: translateY(-15px) rotate(calc(var(--initial-rotate, 0deg) + 5deg)); }
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(105vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.top-left { --initial-rotate: -25deg; }
+.bottom-right { --initial-rotate: 165deg; }
 
