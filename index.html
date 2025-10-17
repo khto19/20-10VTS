@@ -3,65 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chúc Mừng 20/10 - Đội Võ Thị Sáu</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Chúc Mừng 20/10</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Tone.js for music -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
-    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Falling flowers container -->
-    <div id="flower-container"></div>
+    <!-- Màn hình chào mừng -->
+    <section id="welcome-screen" class="screen active">
+        <div class="content-wrapper">
+            <h1>Chúc Mừng 20/10</h1>
+            <h2>Đội Võ Thị Sáu</h2>
+            <p>Gửi những lời chúc ấm áp và chân thành nhất đến các chị em phụ nữ tuyệt vời!</p>
+            <form id="name-form" class="name-form">
+                <input type="text" id="name-input" placeholder="Nhập tên của bạn..." autocomplete="off">
+                <button type="submit">Nhận lời chúc</button>
+            </form>
+        </div>
+    </section>
 
-    <!-- Rose decorations -->
-    <div class="rose-decor top-left">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="rose-svg"><path d="M50,10 C20,20 20,60 50,90 C80,60 80,20 50,10 Z M50,20 C30,30 30,55 50,75 C70,55 70,30 50,20 Z" fill="currentColor"/></svg>
-    </div>
-    <div class="rose-decor bottom-right">
-       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="rose-svg"><path d="M50,10 C20,20 20,60 50,90 C80,60 80,20 50,10 Z M50,20 C30,30 30,55 50,75 C70,55 70,30 50,20 Z" fill="currentColor"/></svg>
-    </div>
+    <!-- Màn hình lời chúc -->
+    <section id="wishes-screen" class="screen">
+        <canvas id="fireworks-canvas"></canvas>
+        <div class="content-wrapper">
+            <div id="wish-box">
+                <p id="wish-text"></p>
+            </div>
+            <div class="controls">
+                <button id="new-wish-btn">Lời chúc khác</button>
+                <button id="back-btn">Nhập tên khác</button>
+                <button id="fireworks-toggle" class="active">Tắt pháo hoa</button>
+                <button id="music-toggle">Bật nhạc</button>
+            </div>
+        </div>
+    </section>
 
-    <main>
-        <!-- Welcome Screen -->
-        <section id="welcome-screen" class="screen active">
-            <div class="content-wrapper">
-                <h1 class="title">Chúc mừng 20/10</h1>
-                <p class="subtitle">Thân gửi các chị em đội Võ Thị Sáu</p>
-                <p class="description">
-                    Nhân ngày Phụ nữ Việt Nam, xin gửi những lời chúc ấm áp và chân thành nhất. Chúc các chị em luôn xinh đẹp, rạng rỡ và ngập tràn hạnh phúc.
-                </p>
-                <form id="name-form">
-                    <input type="text" id="name-input" placeholder="Nhập tên của bạn..." aria-label="Nhập tên của bạn">
-                    <button type="submit" class="btn">Nhận lời chúc</button>
-                </form>
-            </div>
-        </section>
+    <!-- Chữ ký người code -->
+    <footer>
+        <p>Code by KhanhToan&lt;3</p>
+    </footer>
 
-        <!-- Wishes Screen -->
-        <section id="wishes-screen" class="screen">
-            <canvas id="fireworks-canvas"></canvas>
-            <div class="content-wrapper">
-                <div id="wish-text" class="wish-letter"></div>
-                <div class="button-group">
-                    <button id="new-wish-btn" class="btn">Thư chúc khác</button>
-                    <button id="back-btn" class="btn btn-secondary">Nhập tên khác</button>
-                </div>
-            </div>
-            <div class="controls-corner">
-                <button id="fireworks-toggle" aria-label="Tắt/Bật pháo hoa">Tắt pháo hoa</button>
-                <button id="music-toggle" aria-label="Tắt/Bật nhạc">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-music-note-beamed" viewBox="0 0 16 16">
-                        <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z"/>
-                        <path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"/>
-                        <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4V2.905z"/>
-                    </svg>
-                </button>
-            </div>
-        </section>
-    </main>
+    <script src="script.js"></script>
 </body>
 </html>
 
